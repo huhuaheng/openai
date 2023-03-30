@@ -53,7 +53,7 @@ public class AiController {
         HttpResponse execute = post.execute();
         if (execute.isOk()) {
             log.debug("请求成功:{}", execute.body());
-            return Result.success(execute.body());
+            return Result.success(JSON.parseObject(execute.body()));
         }
         log.debug("请求失败:{}", execute.body());
         return Result.error(execute.body());
