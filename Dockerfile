@@ -14,7 +14,7 @@ RUN apk add --no-cache git
 
 # 拷贝项目代码
 RUN git clone https://github.com/huhuaheng/openai.git /usr/src/openai
-WORKDIR /usr/src/student
+WORKDIR /usr/src/openai
 
 # 将阿里的 Maven 源替换为默认 Maven 源
 RUN sed -i 's/http:\/\/repo.maven.apache.org\/maven2/https:\/\/maven.aliyun.com\/repository\/central/g' /usr/share/maven/conf/settings.xml
