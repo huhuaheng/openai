@@ -43,6 +43,7 @@ public class AiController {
     @RequestMapping(value = "/chat", method = RequestMethod.POST)
     public Result chat(@RequestBody ChatDTO question) {
         log.info("请求openai服务：{}", openaiToken);
+        System.out.println(openaiToken);
         HttpRequest post = HttpUtil.createPost(openAiUrl + chatUrl);
         //1.组装参数
         ChatMessageData chatMessageData = new ChatMessageData();
@@ -65,7 +66,7 @@ public class AiController {
             e.printStackTrace();
         }
 
-        return Result.error("请求openai服务失败");
+        return Result.error(execute.body());
     }
 
 }
