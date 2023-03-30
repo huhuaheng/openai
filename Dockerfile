@@ -36,4 +36,4 @@ RUN cp target/openai-0.0.1-SNAPSHOT.jar $APP_HOME/openai-0.0.1-SNAPSHOT.jar
 EXPOSE 8080
 
 # 启动应用
-CMD ["java", "-jar", "/usr/app/openai-0.0.1-SNAPSHOT.jar","--openai.token=${OPENAI_KEY}"]
+CMD ["java", "-jar", "/usr/app/openai-0.0.1-SNAPSHOT.jar","--openai.token=$OPENAI_KEY"]
