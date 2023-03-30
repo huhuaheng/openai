@@ -32,7 +32,7 @@ public class AiController {
     @Value("${openai.url:https://api.openai.com}")
     private String openAiUrl;
 
-    @Value("${openai.token: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}")
+    @Value("${openai.token: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}")
     private String openaiToken;
 
     @Value("${openai.chat:/v1/chat/completions}")
