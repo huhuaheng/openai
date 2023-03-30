@@ -5,6 +5,7 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.huaheng.openai.common.ConfigConstants;
 import com.huaheng.openai.common.Result;
 import com.huaheng.openai.entity.ChatMessageData;
@@ -32,7 +33,7 @@ public class AiController {
     @Value("${openai.url:https://api.openai.com}")
     private String openAiUrl;
 
-    @Value("${openai.token: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}")
+    @Value("${openai.token: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}")
     private String openaiToken;
 
     @Value("${openai.chat:/v1/chat/completions}")
@@ -45,18 +46,25 @@ public class AiController {
         //1.组装参数
         ChatMessageData chatMessageData = new ChatMessageData();
         chatMessageData.setModel(ConfigConstants.MODEL_3_5);
-        chatMessageData.setMessage(CollUtil.newArrayList(new Message("user",question.getQuestion())));
+        chatMessageData.setMessage(CollUtil.newArrayList(new Message("user", question.getQuestion())));
         post.header("Authorization", "Bearer " + openaiToken);
         post.body(JSON.toJSONString(chatMessageData));
-        post.timeout(60000 * 10);
+        post.timeout(60000000);
         //3.返回结果
-        HttpResponse execute = post.execute();
-        if (execute.isOk()) {
-            log.debug("请求成功:{}", execute.body());
-            return Result.success(JSON.parseObject(execute.body()));
+        long s = System.currentTimeMillis();
+        HttpResponse execute = null;
+        try {
+            execute = post.execute();
+            if (execute.isOk()) {
+                return Result.success(JSON.parseObject(execute.body()));
+            }
+            log.debug("请求openai服务失败：{}", execute.body());
+        } catch (Exception e) {
+            log.info("请求openai服务耗时：{}", System.currentTimeMillis() - s);
+            e.printStackTrace();
         }
-        log.debug("请求失败:{}", execute.body());
-        return Result.error(execute.body());
+
+        return Result.error("请求openai服务失败");
     }
 
 }
