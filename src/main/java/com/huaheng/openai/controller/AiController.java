@@ -48,7 +48,7 @@ public class AiController {
         //1.组装参数
         ChatMessageData chatMessageData = new ChatMessageData();
         chatMessageData.setModel(ConfigConstants.MODEL_3_5);
-        chatMessageData.setMessage(CollUtil.newArrayList(new Message("user", question.getQuestion())));
+        chatMessageData.setMessages(CollUtil.newArrayList(new Message("user", question.getQuestion())));
         post.header("Authorization", "Bearer " + openaiToken);
         post.body(JSON.toJSONString(chatMessageData));
         post.timeout(60000000);
@@ -66,7 +66,7 @@ public class AiController {
             e.printStackTrace();
         }
 
-        return Result.error(execute.body());
+        return Result.success(JSON.parseObject(execute.body()));
     }
 
 }

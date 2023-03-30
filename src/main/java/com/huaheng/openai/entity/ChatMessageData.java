@@ -20,5 +20,5 @@ import java.util.List;
 public class ChatMessageData {
     private String model;
 
-    private List<Message> message;
+    private List<Message> messages;
 }
