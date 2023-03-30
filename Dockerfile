@@ -4,6 +4,7 @@ FROM openjdk:8-jdk-alpine
 # 安装 Maven
 RUN apk add --no-cache curl tar bash
 ARG MAVEN_VERSION=3.8.8
+ARG OPENAI_KEY
 ARG USER_HOME_DIR="/root"
 RUN mkdir -p /usr/share/maven && \
     curl -fsSL https://apache.osuosl.org/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar -xzC /usr/share/maven --strip-components=1 && \
@@ -35,4 +36,4 @@ RUN cp target/openai-0.0.1-SNAPSHOT.jar $APP_HOME/openai-0.0.1-SNAPSHOT.jar
 EXPOSE 8080
 
 # 启动应用
-CMD ["java", "-jar", "/usr/app/openai-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "/usr/app/openai-0.0.1-SNAPSHOT.jar","--openai.token=${OPENAI_KEY}"]
