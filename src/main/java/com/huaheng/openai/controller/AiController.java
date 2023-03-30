@@ -42,6 +42,7 @@ public class AiController {
     @ApiOperation("请求openai服务")
     @RequestMapping(value = "/chat", method = RequestMethod.POST)
     public Result chat(@RequestBody ChatDTO question) {
+        log.info("请求openai服务：{}", openaiToken);
         HttpRequest post = HttpUtil.createPost(openAiUrl + chatUrl);
         //1.组装参数
         ChatMessageData chatMessageData = new ChatMessageData();
